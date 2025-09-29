@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3-2-1 Wealth System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+      color: #111827;
+    }
+    header {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 { margin: 0; font-size: 2rem; }
+    header p { margin: 0.5rem 0 0; font-size: 1.1rem; }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    section { margin-bottom: 2rem; }
+    h2 { color: #2563eb; margin-bottom: 0.5rem; }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #1d4ed8; }
+    #result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f3f4f6;
+      border-radius: 10px;
+      display: none;
+    }
+    #result h3 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>3-2-1 Wealth System</h1>
+    <p>Find 3 problems → 2 monetization ideas each → 1 automation system</p>
+  </header>
+
+  <main>
+    <form id="wealthForm">
+      <section>
+        <h2>Step 1: Identify 3 Problems</h2>
+        <input type="text" placeholder="Problem 1" id="p1" required>
+        <input type="text" placeholder="Problem 2" id="p2" required>
+        <input type="text" placeholder="Problem 3" id="p3" required>
+      </section>
+
+      <section>
+        <h2>Step 2: Monetization Ideas</h2>
+        <p>For each problem, list 2 ways to monetize:</p>
+        <textarea placeholder="Problem 1 - Monetization Ideas" id="m1" required></textarea>
+        <textarea placeholder="Problem 2 - Monetization Ideas" id="m2" required></textarea>
+        <textarea placeholder="Problem 3 - Monetization Ideas" id="m3" required></textarea>
+      </section>
+
+      <section>
+        <h2>Step 3: Automation System</h2>
+        <select id="automation" required>
+          <option value="">-- Select an automation system --</option>
+          <option>Website Funnel</option>
+          <option>Mobile App</option>
+          <option>Online Course</option>
+          <option>Subscription Service</option>
+          <option>AI Tool / Chatbot</option>
+          <option>E-commerce Store</option>
+        </select>
+      </section>
+
+      <button type="submit">Generate My Wealth Plan</button>
+    </form>
+
+    <div id="result">
+      <h3>Your 3-2-1 Wealth Plan</h3>
+      <div id="output"></div>
+      <button onclick="downloadPDF()">Download as PDF</button>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const form = document.getElementById('wealthForm');
+    const result = document.getElementById('result');
+    const output = document.getElementById('output');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const p1 = document.getElementById('p1').value;
+      const p2 = document.getElementById('p2').value;
+      const p3 = document.getElementById('p3').value;
+      const m1 = document.getElementById('m1').value;
+      const m2 = document.getElementById('m2').value;
+      const m3 = document.getElementById('m3').value;
+      const automation = document.getElementById('automation').value;
+
+      output.innerHTML = `
+        <p><strong>Problem 1:</strong> ${p1}<br>
+        <em>Monetization:</em> ${m1}</p>
+        <p><strong>Problem 2:</strong> ${p2}<br>
+        <em>Monetization:</em> ${m2}</p>
+        <p><strong>Problem 3:</strong> ${p3}<br>
+        <em>Monetization:</em> ${m3}</p>
+        <p><strong>Chosen Automation System:</strong> ${automation}</p>
+      `;
+      result.style.display = 'block';
+    });
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text("3-2-1 Wealth Plan", 10, 10);
+      doc.text(output.innerText, 10, 20);
+      doc.save("wealth-plan.pdf");
+    }
+  </script>
+</body>
+</html>
